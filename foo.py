@@ -1,10 +1,13 @@
-# Please review the provided FastAPI code that implements two endpoints /user/{user_id} (GET) and /user (POST), which interact with an SQLite database and send audit logs to an external service.
+# Please review the provided Flask code that implements two endpoints /user/{user_id} (GET) 
+# and /user (POST), which interact with an SQLite database and send audit logs to an external 
+# service.
 # Your task is to write unit test cases for these endpoints, focusing on:
 # - Testing the success and failure scenarios for both endpoints.
 # - Mocking the database interactions so the tests do not depend on a real database.
 # - Mocking the external audit log HTTP requests to avoid real network calls.
 # - Validating that audit logs are sent appropriately when endpoints are called.
-# You can use any testing framework and mocking tools you prefer. Please provide example test functions that cover the main behaviors.
+# You can use any testing framework and mocking tools you prefer. Please provide example test 
+# functions that cover the main behaviors.
 
 from datetime import datetime
 from flask import Flask, request, jsonify, abort
