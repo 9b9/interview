@@ -10,3 +10,9 @@ class MyTest(unittest.TestCase):
     def test_db_name(self):
         assert foo.DB_NAME == "users.db"
 
+    def test_get_user_not_exists(self):
+        # Arrange
+        
+        # Act
+
+        # Assert
