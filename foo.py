@@ -6,11 +6,9 @@
 # - Mocking the database interactions so the tests do not depend on a real database.
 # - Mocking the external audit log HTTP requests to avoid real network calls.
 # - Validating that audit logs are sent appropriately when endpoints are called.
-# You can use any testing framework and mocking tools you prefer. Please provide example test 
-# functions that cover the main behaviors.
 
 from datetime import datetime
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify
 import sqlite3
 import json
 import requests
@@ -21,7 +19,7 @@ import requests
 # +----------------------+
 # |       users          |
 # +----------------------+
-# | id   : INTEGER       | <--- Primary Key, AUTOINCREMENT
+# | id   : INTEGER       | 
 # | name : TEXT NOT NULL |
 # +----------------------+
 #
@@ -35,7 +33,6 @@ AUDIT_LOG_URL = "https://example.com/audit"
 # Initialize FastAPI application
 app = Flask(__name__)
 
-
 def send_audit_log(action: str, detail: dict):
     """Send an audit log entry to an external audit service.
 
@@ -46,7 +43,6 @@ def send_audit_log(action: str, detail: dict):
     Returns:
         None
     """
-    ...
     try:
         payload = {
             "action": action,
@@ -59,10 +55,6 @@ def send_audit_log(action: str, detail: dict):
         # Logging failure for debug purposes only; does not affect API response
         print(f"[Audit log failed] {e}")
 
-# GET /user/{user_id}
-# Fetch a user by ID and log the access action
-
-
 @app.route("/user/<int:user_id>", methods=["GET"])
 def get_user(user_id: int):
     """Retrieve a user by their ID from the database.
@@ -72,9 +64,6 @@ def get_user(user_id: int):
 
     Returns:
         dict: A dictionary containing user information with keys 'id' and 'name'.
-
-    Raises:
-        HTTPException: If the user is not found (404).
     """
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -89,7 +78,6 @@ def get_user(user_id: int):
     else:
         return jsonify({"message": "User not found"}), 404
 
-
 @app.route("/user", methods=["POST"])
 def create_user():
     """Create a new user based on JSON payload from the request.
@@ -99,9 +87,6 @@ def create_user():
 
     Returns:
         dict: A dictionary containing the created user's 'id' and 'name'.
-
-    Raises:
-        HTTPException: If the input data is invalid (400).
     """
     try:
         data = request.get_json(force=True)
@@ -119,7 +104,6 @@ def create_user():
     result = {"id": user_id, "name": name}
     send_audit_log("CREATE_USER", result)  # Audit the CREATE action
     return jsonify(result), 201
-
 
 if __name__ == "__main__":
     app.run(debug=True)
